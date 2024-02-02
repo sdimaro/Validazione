@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <h1 style="text-align: center;">Prova Form di validazione lato Client</h1>
+    <form name="registrazione" id="registrazione" method="post" action="/send">
+
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username" value=""><br>
+        <p id="nome"></p>
+
+        <label for="pwd">Password:</label><br>
+        <input type="password" id="pwd" name="pwd"><br>
+        <p id="passw"></p>
+
+        <label for="email">Mail:</label><br>
+        <input type="email" id="email" name="email" placeholder="inserisci mail"><br><br>
+        <p id="mail"></p>
+
+        <label for="birthday">Birthday:</label>
+        <input type="date" id="birthday" name="birthday" min="1900-01-01" max="2024-12-31"> <br><br>
+        <p id="data"></p>
+
+        <input type="submit" name="Submit" value="Invia">
+
+    </form>
+
+    <script>
+        document.getElementById("registrazione").addEventListener("submit", function (event) {
+            let username = document.forms.registrazione.username;
+            let passw = document.forms.registrazione.pwd;
+            let email = document.forms.registrazione.email;
+            let birthday = document.forms.registrazione.birthday;
+
+            if (username.value == "" || username.value.length < 3 || username.value.length > 15) {
+                username.style.border = "2px solid red";
+                event.preventDefault();
+            } else {
+                username.style.border = "";
+            }
+
+            if (passw.value == "" || passw.value.length < 8 || passw.value.length > 10) {
+                passw.style.border = "2px solid red";
+                event.preventDefault();
+            } else {
+                passw.style.border = "";
+            }
+
+            if (email.value == "" || (!email.value.includes("@gmail.com") && !email.value.includes("@itis.pr.it"))) {
+                email.style.border = "2px solid red";
+                event.preventDefault();
+            } else {
+                email.style.border = "";
+            }
+
+            if ( birthday.value > "2024-12-31" || birthday.value < "1900-01-01") {
+                birthday.style.border = "2px solid red";
+                event.preventDefault();
+            } else {
+                birthday.style.border = "";
+            }
+        });
+
+
+        // Validazione in tempo reale
+        document.getElementById("username").addEventListener("change", function (event) {
+            let username = document.forms.registrazione.username;
+            document.getElementById("nome").innerHTML = "";
+
+            if (username.value == "" || username.value.length < 3 || username.value.length > 15) {
+                document.getElementById("nome").innerHTML = "L'username deve essere compreso tra 3 o 15 caratteri";
+            }
+        });
+
+        document.getElementById("pwd").addEventListener("change", function (event) {
+            let passw = document.forms.registrazione.pwd;
+            document.getElementById("passw").innerHTML = "";
+
+            if (passw.value == "" || passw.value.length < 8 || passw.value.length > 10) {
+                document.getElementById("passw").innerHTML = "La password deve essere compreso tra 8 e 10 caratteri";
+            }
+        });
+        
+        document.getElementById("email").addEventListener("change", function (event) {
+            let email = document.forms.registrazione.email;
+            document.getElementById("mail").innerHTML = "";
+
+            if (email.value == "" || (!email.value.includes("@gmail.com") && !email.value.includes("@itis.pr.it"))) {
+                document.getElementById("mail").innerHTML = "La mail deve contenere @, e gli unici domini accettabili sono: gmail.com e itis.pr.it";
+            }
+        });
+        
+        document.getElementById("birthday").addEventListener("change", function (event) {
+            let birthday = document.forms.registrazione.birthday;
+            document.getElementById("data").innerHTML = "";
+
+            if ( birthday.value > "2024-12-31" || birthday.value < "1900-01-01") {
+                document.getElementById("data").innerHTML = "La data di nascita deve essere compresa tra 1900-01-01 e 2024-12-31.";
+            }
+        });
+    </script>
+
+</body>
+
+</html>
